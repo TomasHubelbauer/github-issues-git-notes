@@ -3,8 +3,11 @@ description: Stores GitHub Issues in Git notes on every push to the repository.
 runs:
   using: composite
   steps:
-  - name: Check out the workflow ref (detached HEAD)
-    uses: actions/checkout@main
+  - name: Check out the Git repository and its main branch (not detached HEAD)
+    uses: actions/checkout@v3
+    with:
+      ref: main
+      fetch-depth: 0
   - name: Run the action script
     shell: bash
     run: |
