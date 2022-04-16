@@ -26,3 +26,35 @@ as you'll be responsible for merging the local and remote changes in that case.
 
 To view notes for the `main` branch, run the Git `log` command with `%N` format:
 `git log --pretty=format:"%ai%n  %H%n  %s%n  %N%n" --show-notes main`.
+
+## Usage
+
+`.github/workflows/main.yml`:
+```yml
+name: main
+on: issues
+
+jobs:
+  main:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Back up GitHub Issues to Git notes
+      uses: tomashubelbauer/github-issues-git-notes@main
+```
+
+You can see this in action (pun intended) in this GitHub repository:
+https://github.com/TomasHubelbauer/github-issues-git-notes-demo
+
+I have not published this GitHub Action to the GitHub Marketplace.
+
+## Development
+
+1. Make a change here
+2. Go to https://github.com/TomasHubelbauer/github-issues-git-notes-demo/actions/workflows/main.yml
+3. Click Run workflow
+
+## Contributing
+
+I am not likely to accept contributions unless they benefit my use-case.
+
+Feel free to fork the action and adjust it to suit your needs.
