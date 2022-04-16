@@ -1,0 +1,25 @@
+name: GitHub Issues Git Notes
+description: Stores GitHub Issues in Git notes on every push to the repository.
+runs:
+  using: composite
+  steps:
+  - name: Check out the workflow ref (detached HEAD)
+    uses: actions/checkout@main
+  - name: Run the action script
+    shell: bash
+    run: |
+      # Configure GitHub Actions service account Git identity
+      git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+      git config --global user.name "github-actions[bot]"
+      
+      # Pull existing notes so they are built upon not instead of for the push
+      git fetch origin "refs/notes/*:refs/notes/*"
+      
+      # Store the GitHub Issues in a Git note associated to the main branch
+      git notes add main -m "$(curl --no-progress-meter ${{github.api_url}}/repos/${{github.repository}}/issues -u :${{github.token}})"
+      
+      # Print Git notes for each commit on main (like `git status` for notes)
+      git log --pretty=format:"%ai ${{github.server_url}}/${{github.repository}}/commit/%h %<(80,trunc)%s%n%N%n" --show-notes main
+      
+      # Push the changes to the Git notes back to the GitHub repository
+      git push origin refs/notes/*
