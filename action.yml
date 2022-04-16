@@ -16,4 +16,4 @@ runs:
       git notes add main -f -m "$(curl --no-progress-meter '${{github.api_url}}/repos/${{github.repository}}/issues?state=all' -u :${{github.token}})"
 
       # Push the changes to the Git notes back to the GitHub repository
-      git push origin refs/notes/*
+      git push origin refs/notes/* -f
