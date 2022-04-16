@@ -3,11 +3,6 @@ description: Stores GitHub Issues in Git notes on every push to the repository.
 runs:
   using: composite
   steps:
-  - name: Check out the Git repository and its main branch (not detached HEAD)
-    uses: actions/checkout@v3
-    with:
-      ref: main
-      fetch-depth: 0
   - name: Run the action script
     shell: bash
     run: |
@@ -15,11 +10,8 @@ runs:
       git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
       git config --global user.name "github-actions[bot]"
       
-      # Pull existing notes so they are built upon not instead of for the push
-      git fetch origin "refs/notes/*:refs/notes/*"
-      
       # Store the GitHub Issues in a Git note associated to the main branch
-      git notes add main -f -m "$(curl --no-progress-meter ${{github.api_url}}/repos/${{github.repository}}/issues -u :${{github.token}})"
+      git notes add main -f -m "$(curl --no-progress-meter '${{github.api_url}}/repos/${{github.repository}}/issues?state=all' -u :${{github.token}})"
 
       # Push the changes to the Git notes back to the GitHub repository
       git push origin refs/notes/*
