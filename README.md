@@ -22,8 +22,7 @@ branch's tip commit. If the workflow runs multiple times for the same commit, it
 will update the note for that commit.
 
 Git notes can be fetched locally by using `git fetch` with the `notes` ref:
-`git fetch origin "refs/notes/*:refs/notes/*"`. Avoid managing Git notes locally
-as you'll be responsible for merging the local and remote changes in that case.
+`git fetch origin "+refs/notes/*:refs/notes/*"`. This will replace local notes.
 
 To view notes for the `main` branch, run the Git `log` command with `%N` format:
 `git log --pretty=format:"%ai%n  %H%n  %s%n  %N%n" --show-notes main`.
