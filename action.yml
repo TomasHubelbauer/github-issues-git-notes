@@ -19,7 +19,7 @@ runs:
       git fetch origin "refs/notes/*:refs/notes/*"
       
       # Store the GitHub Issues in a Git note associated to the main branch
-      git notes add main -m "$(curl --no-progress-meter ${{github.api_url}}/repos/${{github.repository}}/issues -u :${{github.token}})"
+      git notes add main -f -m "$(curl --no-progress-meter ${{github.api_url}}/repos/${{github.repository}}/issues -u :${{github.token}})"
       
       # Print Git notes for each commit on main (like `git status` for notes)
       git log --pretty=format:"%ai ${{github.server_url}}/${{github.repository}}/commit/%h %<(80,trunc)%s%n%N%n" --show-notes main
