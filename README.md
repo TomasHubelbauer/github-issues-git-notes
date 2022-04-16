@@ -2,6 +2,7 @@
 
 [Git Notes]: https://git-scm.com/docs/git-notes
 [`issues`]: https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#issues
+[`issue_comment`]: https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#issue_comment
 
 This GitHub Action stores the API payload from the `GET /issues` API call into
 the Git notes ref of the repository it has run for.
@@ -10,7 +11,7 @@ This repository implements a GitHub Actions that takes the GitHub Issues (backed
 by the GitHub database not the Git objects) of the  GitHub repository it runs on
 using the GitHub API and stores the JSON in the Git repository's [Git Notes].
 
-This action should be run on all [`issues`] related trigger events. See the
+This action should be run on all [`issues`] & [`issue_comment`] trigger events.
 [demo](https://github.com/TomasHubelbauer/github-issues-git-notes-demo).
 
 Git notes are pushed back to the repository using `git push origin refs/notes/*`
@@ -32,7 +33,9 @@ To view notes for the `main` branch, run the Git `log` command with `%N` format:
 `.github/workflows/main.yml`:
 ```yml
 name: main
-on: issues
+on:
+  issues:
+  issue_comment:
 
 jobs:
   main:
