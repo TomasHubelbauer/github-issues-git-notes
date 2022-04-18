@@ -14,6 +14,9 @@ runs:
       
       # Store the GitHub Issues in a Git note associated to the main branch
       git notes add main -f -m "$(curl --no-progress-meter '${{github.api_url}}/repos/${{github.repository}}/issues?state=all' -u :${{github.token}})"
+      
+      # Integrate in recent changes to make sure we're on latest before the push
+      git pull --rebase
 
       # Push the changes to the Git notes back to the GitHub repository
       git push origin refs/notes/* -f
